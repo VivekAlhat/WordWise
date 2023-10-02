@@ -37,7 +37,7 @@ export default function Home() {
                 <span className="text-violet-700 dark:text-violet-500 underline">
                   typing
                 </span>
-                &nbsp; a word in search bar above.
+                &nbsp;a word in search bar above.
               </p>
             </div>
           )}

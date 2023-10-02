@@ -3,13 +3,14 @@ import Definition from "./Definition";
 import API_BASE_URL from "@/lib/api";
 import useDictionaryStore from "@/store/store";
 import { DictionaryResponse, Meaning } from "../lib/types";
+import Alternatives from "./Alternatives";
 
 interface IMeaning {
   meanings: Meaning;
 }
 
 const Meaning: React.FC<IMeaning> = ({ meanings }) => {
-  const { partOfSpeech, definitions, synonyms } = meanings;
+  const { partOfSpeech, definitions, synonyms, antonyms } = meanings;
   const { setLoading, setError, setDefinition } = useDictionaryStore();
 
   const searchWord = async (word: string) => {
@@ -48,23 +49,16 @@ const Meaning: React.FC<IMeaning> = ({ meanings }) => {
           <Definition key={_idx} definitions={item} />
         ))}
       </ul>
-      {synonyms.length > 0 && (
-        <div className="flex gap-4">
-          <p>Synonyms:</p>
-          <ul className="flex flex-wrap items-center gap-4">
-            {synonyms.map((item, _idx) => (
-              <Link
-                key={_idx}
-                href="#"
-                onClick={() => searchWord(item)}
-                className="text-violet-700 dark:text-violet-400 hover:underline"
-              >
-                {item}
-              </Link>
-            ))}
-          </ul>
-        </div>
-      )}
+      <Alternatives
+        alternatives={synonyms}
+        name="Synonyms"
+        searchWord={searchWord}
+      />
+      <Alternatives
+        alternatives={antonyms}
+        name="Antonyms"
+        searchWord={searchWord}
+      />
     </div>
   );
 };
